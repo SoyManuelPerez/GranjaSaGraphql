@@ -43,6 +43,7 @@ const typeDefs = gql`
 `;
 // Define tus resolvers
 const resolvers = {
+  //Querys
   Query: {
     Clientes: async () => {
       const users = await Cliente.find();
@@ -59,6 +60,7 @@ const resolvers = {
       return porcinos;
     }
   },
+  //Mutaciones
   Mutation: {
     createCliente: async (_, { cedula, nombre, dir, tel }) => {
       const newCliente = new Cliente({ cedula, nombre, dir, tel });
@@ -89,10 +91,8 @@ const app = express();
 server.start().then(() => {
     // Aplica ApolloServer como middleware en Express
     server.applyMiddleware({ app });
-  
     // Configura el puerto en el que se ejecutará el servidor
     const PORT = 4000;
-  
     // Inicia el servidor Express
     app.listen({ port: PORT }, () =>
       console.log(`Servidor GraphQL listo en http://localhost:${PORT}${server.graphqlPath}`)
