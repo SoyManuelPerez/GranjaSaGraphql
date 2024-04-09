@@ -1,7 +1,7 @@
 const typeDefs = require('./graphql/structure')
 const resolvers = require('./graphql/resolvers')
 const express = require('express');
-const { ApolloServer, gql } = require('apollo-server-express');
+const { ApolloServer} = require('apollo-server-express');
 const mongoose = require('mongoose');
 
 // Conexión a la base de datos MongoDB
