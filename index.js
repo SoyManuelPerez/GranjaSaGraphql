@@ -7,7 +7,7 @@ mongoose.connect('mongodb://localhost/granjaSA' , { useNewUrlParser: true, useUn
 .catch( err => console.log(err));
 // Define tu esquema de GraphQL
 const typeDefs = gql`
-  type User {
+  type Cliente {
     id: ID!
     cedula: Int,
     nombre: String,
@@ -16,37 +16,43 @@ const typeDefs = gql`
   }
 
   type Query {
-    users: [User]
+    Clientes: [Cliente]
   }
   type Mutation {
-    createUser(cedula: Int!, nombre: String!, dir: String!, tel: Int!): User
-    deleteUserByCedula(cedula: Int!): User
+    createCliente(cedula: Int!, nombre: String!, dir: String!, tel: Int!): Cliente
+    deleteClienteByCedula(cedula: Int!): Cliente
+    updateClienteByCedula(cedula: Int!, nombre: String, dir: String, tel: Int): Cliente
   }
 `;
 // Define tus resolvers
 const resolvers = {
   Query: {
-    users: async () => {
-      const users = await User.find();
+    Clientes: async () => {
+      const users = await Cliente.find();
       console.log(users)
       return users;
     }
   },
   Mutation: {
-    createUser: async (_, { cedula, nombre, dir, tel }) => {
-      const newUser = new User({ cedula, nombre, dir, tel });
-      await newUser.save();
-      return newUser;
+    createCliente: async (_, { cedula, nombre, dir, tel }) => {
+      const newCliente = new Cliente({ cedula, nombre, dir, tel });
+      await newCliente.save();
+      return newCliente;
     },
-    deleteUserByCedula: async (_,{ cedula }) => {
-      const deletedUser = await User.findOneAndDelete({ cedula });
-      console.log("Usuario eliminado")
-      return deletedUser;
+    deleteClienteByCedula: async (_,{ cedula }) => {
+      const deletedCliente = await Cliente.findOneAndDelete({ cedula });
+      console.log("Cliente eliminado",deletedCliente)
+      return deletedCliente;
+    },
+    updateClienteByCedula: async (_, { cedula, nombre, dir, tel }) => {
+      const updatedCliente = await Cliente.findOneAndUpdate({ cedula }, { nombre, dir, tel }, { new: true });
+      console.log("Cliente actualizado:",updatedCliente)
+      return updatedCliente;
     }
   }
 };
 // Define tu modelo de datos con Mongoose
-const User = mongoose.model("clientes", {
+const Cliente = mongoose.model("clientes", {
   cedula: Number,
     nombre: String,
     dir: String,
