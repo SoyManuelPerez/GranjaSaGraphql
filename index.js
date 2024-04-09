@@ -20,10 +20,20 @@ const typeDefs = gql`
     Nombre: String,
     Dosis: String,
   }
+  type Porcino{
+    id: ID!
+    id_por: Int,
+    raza_por: String,
+    edad_por: Int,
+    peso_por: Int,
+    alim_por: Int,
+    cli_por: Int
+  }
 
   type Query {
     Clientes: [Cliente]
     Alimentos: [Alimento]
+    Porcinos:[Porcino]
   }
   type Mutation {
     createCliente(cedula: Int!, nombre: String!, dir: String!, tel: Int!): Cliente
@@ -43,6 +53,10 @@ const resolvers = {
       const alimentos = await Alimento.find();
       console.log(alimentos)
       return alimentos;
+    },  Porcinos: async () => {
+      const porcinos = await Porcino.find();
+      console.log(porcinos)
+      return porcinos;
     }
   },
   Mutation: {
@@ -66,6 +80,7 @@ const resolvers = {
 // Define tu modelo de datos con Mongoose
 const Cliente = require('./model/clientes.js')
 const Alimento = require('./model/alimento.js')
+const Porcino = require('./model/porcino.js')
 // Crea una instancia de ApolloServer
 const server = new ApolloServer({ typeDefs, resolvers });
 // Crea una instancia de Express
