@@ -39,6 +39,11 @@ const typeDefs = gql`
     createCliente(cedula: Int!, nombre: String!, dir: String!, tel: Int!): Cliente
     deleteClienteByCedula(cedula: Int!): Cliente
     updateClienteByCedula(cedula: Int!, nombre: String, dir: String, tel: Int): Cliente
+
+    createAlimento(codigo: Int!, Nombre: String!, Dosis: String!): Alimento
+    deleteAlimentoByCodigo(codigo: Int!): Alimento
+    updateAlimentoByCodigo(codigo: Int!, Nombre: String!, Dosis: String!): Alimento
+
   }
 `;
 // Define tus resolvers
@@ -76,7 +81,23 @@ const resolvers = {
       const updatedCliente = await Cliente.findOneAndUpdate({ cedula }, { nombre, dir, tel }, { new: true });
       console.log("Cliente actualizado:",updatedCliente)
       return updatedCliente;
-    }
+    },
+    //Mutacion de alimento
+    createAlimento: async (_, { codigo, Nombre, Dosis }) => {
+      const newAlimento = new Alimento({ codigo, Nombre, Dosis });
+      await newAlimento.save();
+      return newAlimento;
+    },
+    deleteAlimentoByCodigo: async (_,{ codigo }) => {
+      const deletedAlimento = await Alimento.findOneAndDelete({ codigo });
+      console.log("Alimento eliminado",deletedAlimento)
+      return deletedAlimento;
+    },
+    updateAlimentoByCodigo: async (_, { codigo, Nombre, Dosis }) => {
+      const updatedAlimento = await Alimento.findOneAndUpdate({ codigo }, { Nombre, Dosis}, { new: true });
+      console.log("Alimento actualizado:",updatedAlimento)
+      return updatedAlimento;
+    },
   }
 };
 // Define tu modelo de datos con Mongoose
