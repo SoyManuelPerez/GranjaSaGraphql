@@ -52,12 +52,7 @@ const resolvers = {
   }
 };
 // Define tu modelo de datos con Mongoose
-const Cliente = mongoose.model("clientes", {
-  cedula: Number,
-    nombre: String,
-    dir: String,
-    tel: Number
-});
+const Cliente = require('./model/clientes.js')
 // Crea una instancia de ApolloServer
 const server = new ApolloServer({ typeDefs, resolvers });
 // Crea una instancia de Express
