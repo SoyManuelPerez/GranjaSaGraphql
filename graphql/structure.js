@@ -11,8 +11,8 @@ const typeDefs = gql`
   type Alimento{
     id: ID!
     codigo: Int,
-    nombre: String,
-    dosis: String,
+    Nombre: String,
+    Dosis: String,
   }
   type Porcino{
     id: ID!
@@ -21,7 +21,9 @@ const typeDefs = gql`
     edad_por: Int,
     peso_por: Int,
     alim_por: Int,
-    cli_por: Int
+    cli_por: Int,
+    cliente: Cliente,  
+    alimento: Alimento,
   }
 
   type Query {
@@ -33,9 +35,9 @@ const typeDefs = gql`
     createCliente(cedula: Int!, nombre: String!, dir: String!, tel: Int!): Cliente
     deleteClienteByCedula(cedula: Int!): Cliente
     updateClienteByCedula(cedula: Int!, nombre: String!, dir: String!, tel: Int!): Cliente
-    createAlimento(codigo: Int!, nombre: String!, dosis: String!): Alimento
+    createAlimento(codigo: Int!, Nombre: String!, Dosis: String!): Alimento
     deleteAlimentoByCodigo(codigo: Int!): Alimento
-    updateAlimentoByCodigo(codigo: Int!, nombre: String!, dosis: String!): Alimento
+    updateAlimentoByCodigo(codigo: Int!, Nombre: String!, Dosis: String!): Alimento
     createPorcino(id_por: Int!, raza_por: String!, edad_por: Int!, peso_por: Int!, alim_por: Int!, cli_por: Int!): Porcino
     deletePorcinoById(id_por: Int!): Porcino
     updatePorcinoById(id_por: Int!, raza_por: String!, edad_por: Int!, peso_por: Int!, alim_por: Int!, cli_por: Int!): Porcino
